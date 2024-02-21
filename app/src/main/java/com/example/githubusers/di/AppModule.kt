@@ -42,7 +42,6 @@ object AppModule {
         .build()
 
 
-    @Singleton
     @Provides
     fun provideGithubUserDao(db: Database) = db.userDao()
 
