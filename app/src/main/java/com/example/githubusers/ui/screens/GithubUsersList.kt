@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -74,10 +75,12 @@ fun GithubUsersList(
         }
     ) { paddings ->
         Column(
-            Modifier
+            modifier = Modifier
                 .fillMaxSize()
 //                .verticalScroll(scrollState)
-                .padding(paddings)
+                .padding(paddings),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
             PaginationButton(viewModel)
             SearchBar(
@@ -222,8 +225,7 @@ fun UsersList(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        items(users.size) { index ->
-            val user = users[index]
+        items(items = users, key = { user -> user.id }) { user ->
             UserCard(
                 user = user,
                 clickAction = { onUserClick(user) }
@@ -286,8 +288,7 @@ fun PagingUsersList(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                items(count = users.itemCount) { index ->
-                    val user = users[index]
+                items(items = users.itemSnapshotList, key = { user -> user?.id ?: 0 }) { user ->
                     user?.let {
                         UserCard(
                             user = user,
